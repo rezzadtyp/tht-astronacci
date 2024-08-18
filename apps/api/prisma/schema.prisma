@@ -19,3 +19,29 @@ model Sample {
 
   @@map("samples") // if you want to use snake_case format
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String?
+  provider  Provider @default(CREDENTIALS)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @default(TYPE_A)
+
+  @@map("users")
+}
+
+enum Provider {
+  GOOGLE
+  CREDENTIALS
+  FACEBOOK
+}
+
+enum Role {
+  TYPE_A
+  TYPE_B
+  TYPE_C
+  TEACHER
+}

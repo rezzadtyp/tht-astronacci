@@ -7,10 +7,12 @@
     "build": "next build",
     "serve": "next start",
     "lint": "next lint",
-    "test": "npx cypress verify & cypress run --component"
+    "test": "npx cypress verify & cypress run --component",
+    "npx": "npx"
   },
   "dependencies": {
     "next": "14.0.4",
+    "next-auth": "^5.0.0-beta.20",
     "react": "^18",
     "react-dom": "^18"
   },
