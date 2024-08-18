@@ -6,7 +6,7 @@ This project uses React.js with NextJS for the frontend, Express.js for the back
 
 Runs the app in the development mode.
 
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser. For API, you can access it in [http://localhost:8000/api](http://localhost:8000/api). The app will reload if you make edits.
+Open [http://localhost:3000](http://localhost:5173) to view it in the browser. For API, you can access it in [http://localhost:8000/api](http://localhost:8000/api). The app will reload if you make edits.
 
 ### `npm run build`
 
@@ -24,7 +24,7 @@ Run command on specific app (install package, run test, etc).
 
 Run command on specific app with options.
 
-Example : `npm run seqeulize --workspace=api -- --db:migrate`
+Example : `npm run prisma --workspace=api -- db migrate dev`
 
 # Rules
 

@@ -29,9 +29,8 @@ export const loginService = async (body: Pick<User, 'email' | 'password'>) => {
     const { password: pass, ...userWithoutPassword } = user;
 
     return {
-      message: 'Login Success!',
-      data: { ...userWithoutPassword },
-      token: token,
+      ...userWithoutPassword,
+      token,
     };
   } catch (error) {
     throw error;
