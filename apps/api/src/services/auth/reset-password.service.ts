@@ -1,5 +1,5 @@
 import prisma from '@/prisma';
-import { hashPassword } from 'lib/bcrypt';
+import { hashPassword } from '@/lib/bcrypt';
 
 export const resetPasswordService = async (
   userId: number,

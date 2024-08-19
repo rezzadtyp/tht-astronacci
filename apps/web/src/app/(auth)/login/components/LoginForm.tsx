@@ -16,9 +16,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import useGoogleSignIn from '../../../../hooks/api/auth/useGoogleSignIn';
 
 const LoginForm = () => {
   const { mutateAsync: login, isPending } = useLogin();
+  const { mutateAsync: googleLogin, isPending: isGooglePending } =
+    useGoogleSignIn();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -70,6 +73,21 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
+
+      <div>
+        <p>or</p>
+        <Button
+          onClick={async () => {
+            try {
+              await googleLogin();
+            } catch (error) {
+              console.error('Google sign-in failed', error);
+            }
+          }}
+        >
+          {isGooglePending ? 'Signing in...' : 'Sign In With Google'}
+        </Button>
+      </div>
     </div>
   );
 };

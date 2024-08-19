@@ -22,6 +22,7 @@ const Header = () => {
           <div className="flex cursor-pointer items-center gap-8 font-medium">
             {session.data?.user.id ? (
               <>
+                <Link href="/dashboard">Dashboard</Link>
                 <Link href="/profile">{session.data.user.name}</Link>
                 <h3 onClick={() => signOut()}>Logout</h3>
               </>

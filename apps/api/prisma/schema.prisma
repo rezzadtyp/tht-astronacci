@@ -21,14 +21,15 @@ model Sample {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String?
-  provider  Provider @default(CREDENTIALS)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  role      Role     @default(TYPE_A)
+  provider  Provider  @default(CREDENTIALS)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  role      Role      @default(TYPE_A)
+  Content   Content[]
 
   @@map("users")
 }
@@ -44,4 +45,27 @@ enum Role {
   TYPE_B
   TYPE_C
   TEACHER
+}
+
+model Content {
+  id            Int         @id @default(autoincrement())
+  title         String
+  slug          String
+  thumbnail_url String
+  video_url     String?
+  description   String      @db.LongText()
+  category      String
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id])
+  deletedAt     DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  type          ContentType
+
+  @@map("contents")
+}
+
+enum ContentType {
+  ARTICLE
+  VIDEO
 }

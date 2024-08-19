@@ -1,5 +1,6 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -11,14 +12,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return null;
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 2 * 60 * 60,
   },
   pages: {
-    signIn: "/login",
-    error: "/error",
+    signIn: '/login',
+    error: '/error',
   },
   callbacks: {
     async signIn() {

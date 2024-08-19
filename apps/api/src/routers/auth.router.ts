@@ -1,6 +1,6 @@
 import { AuthController } from '@/controllers/auth.controller';
 import { Router } from 'express';
-import { verifyToken } from 'lib/verifyToken';
+import { verifyToken } from '@/lib/verifyToken';
 
 export class AuthRouter {
   private router: Router;
@@ -13,16 +13,14 @@ export class AuthRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.post('/register', this.authController.registerController);
-    this.router.post('/login', this.authController.loginController);
-    this.router.post(
-      '/forgot-password',
-      this.authController.forgotPasswordController,
-    );
+    this.router.post('/register', this.authController.register);
+    this.router.post('/login', this.authController.login);
+    this.router.post('/google-login', this.authController.loginWithGoogle);
+    this.router.post('/forgot-password', this.authController.forgotPassword);
     this.router.patch(
       '/reset-password',
       verifyToken,
-      this.authController.resetPasswordController,
+      this.authController.resetPassword,
     );
   }
 

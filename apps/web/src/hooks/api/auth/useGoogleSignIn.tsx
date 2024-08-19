@@ -6,31 +6,28 @@ import { AxiosError } from 'axios';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-const useLogin = () => {
+const useGoogleSignIn = () => {
   const router = useRouter();
   const { axiosInstance } = useAxios();
 
   return useMutation({
-    mutationFn: async (payload: LoginPayload) => {
-      const { data } = await axiosInstance.post('/auth/login', payload);
-      return data;
+    mutationFn: async () => {
+      // const { data } = await axiosInstance.post('/auth/google-login');
+      // console.log(data);
+      // return data;
+      console.log('mutationfn running');
     },
     onSuccess: async (data: any) => {
-      await signIn('credentials', {
+      await signIn('google', {
         redirect: false,
         ...data,
       });
       router.replace('/');
     },
     onError: (error: AxiosError<any>) => {
-      console.error('Credential login error:', error.response?.data);
+      console.error('Google login error:', error.response?.data);
     },
   });
 };
 
-export default useLogin;
+export default useGoogleSignIn;
