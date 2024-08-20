@@ -22,6 +22,11 @@ export class AuthRouter {
       verifyToken,
       this.authController.resetPassword,
     );
+    this.router.patch(
+      '/membership',
+      verifyToken,
+      this.authController.updateMembership,
+    );
   }
 
   getRouter(): Router {

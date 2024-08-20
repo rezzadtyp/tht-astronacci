@@ -20,6 +20,22 @@ export class ContentRouter {
       uploader('IMG', 'images').array('thumbnail_url', 1),
       this.contentController.createContent,
     );
+    this.router.get(
+      '/',
+      verifyToken,
+      this.contentController.getContentsByMembership,
+    );
+    this.router.get('/slug', verifyToken, this.contentController.getContent);
+    this.router.patch(
+      '/:id',
+      verifyToken,
+      this.contentController.updateContent,
+    );
+    this.router.delete(
+      '/:id',
+      verifyToken,
+      this.contentController.deleteContent,
+    );
   }
 
   getRouter(): Router {
