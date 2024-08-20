@@ -10,28 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("samples") // if you want to use snake_case format
-}
-
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  password  String?
-  provider  Provider  @default(CREDENTIALS)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  role      Role      @default(TYPE_A)
-  Content   Content[]
+  id           Int         @id @default(autoincrement())
+  name         String
+  email        String      @unique
+  password     String?
+  provider     Provider    @default(CREDENTIALS)
+  role         Role        @default(USER)
+  membershipId Int?
+  membership   Membership? @relation(fields: [membershipId], references: [id])
+  Content      Content[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@map("users")
+}
+
+model Membership {
+  id           Int    @id @default(autoincrement())
+  name         String
+  contentLimit Int
+  users        User[]
+
+  @@map("memberships")
 }
 
 enum Provider {
@@ -41,9 +42,7 @@ enum Provider {
 }
 
 enum Role {
-  TYPE_A
-  TYPE_B
-  TYPE_C
+  USER
   TEACHER
 }
 

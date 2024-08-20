@@ -4,6 +4,7 @@ import { registerService } from '@/services/auth/register.service';
 import { forgotPasswordService } from '@/services/auth/forgot-password.service';
 import { resetPasswordService } from '@/services/auth/reset-password.service';
 import { loginWithGoogleService } from '@/services/auth/google-login.service';
+import { updateMembershipService } from '@/services/auth/update-membership.service';
 
 export class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
@@ -49,6 +50,22 @@ export class AuthController {
     try {
       const { code } = req.body;
       const result = await loginWithGoogleService(code);
+
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateMembership(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = res.locals.user.id;
+      const membershipId = req.body.membershipId;
+
+      const result = await updateMembershipService(
+        Number(userId),
+        Number(membershipId),
+      );
 
       return res.status(200).send(result);
     } catch (error) {
