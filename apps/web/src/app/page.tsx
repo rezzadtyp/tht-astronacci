@@ -1,14 +1,14 @@
 import { Footer } from '@/components/Footer';
 import Header from '@/components/Header';
+import HeroSection from './components/HeroSection';
+import AboutSection from './components/AboutSection';
 
 export default function Home() {
   return (
-    <main className="container">
+    <main className="container space-y-12">
       <Header />
-      <div>Home</div>
-      <h1 className="text-3xl font-bold text-red-400 underline">
-        Hello, Next.js!
-      </h1>
+      <HeroSection />
+      <AboutSection />
       <Footer />
     </main>
   );
