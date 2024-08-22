@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import { axiosInstance } from './axios';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -26,7 +27,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     error: '/error',
   },
   callbacks: {
-    async signIn() {
+    async signIn({ account }) {
+      if (account?.provider === 'google') {
+        try {
+          await axiosInstance.post('/auth/google-login', account.access_token);
+
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
       return true;
     },
     async jwt({ token, user }) {

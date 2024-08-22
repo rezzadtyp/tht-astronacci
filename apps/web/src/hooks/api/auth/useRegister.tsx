@@ -21,7 +21,6 @@ const useRegister = () => {
       return data;
     },
     onSuccess: () => {
-      console.log('Register success');
       router.push('/login');
     },
     onError: (error: AxiosError<any>) => {

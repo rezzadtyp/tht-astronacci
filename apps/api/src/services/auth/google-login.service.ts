@@ -1,21 +1,18 @@
 import { JWT_SECRET } from '@/config';
 import prisma from '@/prisma';
 import { sign } from 'jsonwebtoken';
-import { getTokens } from '@/lib/getTokens';
 import { getUserInfo } from '@/lib/getUserInfo';
 
-export const loginWithGoogleService = async (code: string) => {
+export const loginWithGoogleService = async (access_token: any) => {
   try {
-    const tokens = await getTokens(code);
-
-    if (!tokens) {
+    if (!access_token) {
       return {
         status: 400,
         message: 'Failed to get tokens from google',
       };
     }
 
-    const userInfo = await getUserInfo(tokens.access_token!);
+    const userInfo = await getUserInfo(access_token);
 
     if (!userInfo) {
       return {
