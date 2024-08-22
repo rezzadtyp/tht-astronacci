@@ -76,15 +76,7 @@ const LoginForm = () => {
 
       <div>
         <p>or</p>
-        <Button
-          onClick={async () => {
-            try {
-              await googleLogin();
-            } catch (error) {
-              console.error('Google sign-in failed', error);
-            }
-          }}
-        >
+        <Button onClick={() => googleLogin()} disabled={isGooglePending}>
           {isGooglePending ? 'Signing in...' : 'Sign In With Google'}
         </Button>
       </div>
