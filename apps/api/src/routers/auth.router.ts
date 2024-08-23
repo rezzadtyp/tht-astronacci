@@ -15,7 +15,7 @@ export class AuthRouter {
   private initializeRoutes(): void {
     this.router.post('/register', this.authController.register);
     this.router.post('/login', this.authController.login);
-    this.router.post('/google-login', this.authController.loginWithGoogle);
+    this.router.post('/google', this.authController.loginWithGoogle);
     this.router.post('/forgot-password', this.authController.forgotPassword);
     this.router.patch(
       '/reset-password',

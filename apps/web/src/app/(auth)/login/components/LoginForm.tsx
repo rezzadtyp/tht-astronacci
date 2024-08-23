@@ -17,11 +17,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import useGoogleSignIn from '../../../../hooks/api/auth/useGoogleSignIn';
+import useFacebookLogin from '@/hooks/api/auth/useFacebookLogin';
 
 const LoginForm = () => {
   const { mutateAsync: login, isPending } = useLogin();
   const { mutateAsync: googleLogin, isPending: isGooglePending } =
     useGoogleSignIn();
+  const { mutateAsync: facebookLogin, isPending: isFacebookPending } =
+    useFacebookLogin();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -74,10 +77,13 @@ const LoginForm = () => {
         </form>
       </Form>
 
-      <div>
+      <div className="flex flex-col max-w-md gap-2">
         <p>or</p>
         <Button onClick={() => googleLogin()} disabled={isGooglePending}>
-          {isGooglePending ? 'Signing in...' : 'Sign In With Google'}
+          {isGooglePending ? 'Signing in...' : 'Continue With Google'}
+        </Button>
+        <Button onClick={() => facebookLogin()} disabled={isFacebookPending}>
+          {isGooglePending ? 'Signing in...' : 'Continue With Facebook'}
         </Button>
       </div>
     </div>
