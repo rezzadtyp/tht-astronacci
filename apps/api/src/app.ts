@@ -5,9 +5,11 @@ import express, {
   Request,
   Response,
   NextFunction,
+  static as static_,
 } from 'express';
 import cors from 'cors';
 import { PORT } from './config';
+import { join } from 'path';
 import { AuthRouter } from './routers/auth.router';
 import { ContentRouter } from './routers/content.router';
 
@@ -25,6 +27,7 @@ export default class App {
     this.app.use(cors());
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
+    this.app.use('/api/assets', static_(join(__dirname, '../public')));
   }
 
   private handleError(): void {

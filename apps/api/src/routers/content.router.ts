@@ -19,12 +19,16 @@ export class ContentRouter {
       verifyToken,
       this.contentController.getContentsByMembership,
     );
-    this.router.get('/teacher', this.contentController.getEventsByUserId);
+    this.router.get(
+      '/teacher',
+      verifyToken,
+      this.contentController.getEventsByUserId,
+    );
     this.router.get('/:slug', verifyToken, this.contentController.getContent);
     this.router.post(
       '/',
       verifyToken,
-      uploader('IMG', 'images').array('thumbnail_url', 1),
+      uploader('IMG', '/images').array('thumbnail_url', 1),
       this.contentController.createContent,
     );
     this.router.patch(
