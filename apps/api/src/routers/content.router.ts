@@ -14,18 +14,19 @@ export class ContentRouter {
   }
 
   private initializeRoutes(): void {
+    this.router.get(
+      '/',
+      verifyToken,
+      this.contentController.getContentsByMembership,
+    );
+    this.router.get('/teacher', this.contentController.getEventsByUserId);
+    this.router.get('/:slug', verifyToken, this.contentController.getContent);
     this.router.post(
       '/',
       verifyToken,
       uploader('IMG', 'images').array('thumbnail_url', 1),
       this.contentController.createContent,
     );
-    this.router.get(
-      '/',
-      verifyToken,
-      this.contentController.getContentsByMembership,
-    );
-    this.router.get('/slug', verifyToken, this.contentController.getContent);
     this.router.patch(
       '/:id',
       verifyToken,

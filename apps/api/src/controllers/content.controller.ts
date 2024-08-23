@@ -4,6 +4,7 @@ import { deleteContentService } from '@/services/content/delete-content.service'
 import { updateContentService } from '@/services/content/update-content.service';
 import { getContentsByMembershipService } from '@/services/content/get-contents-by-membership.service';
 import { getContentService } from '@/services/content/get-content.service';
+import { getContentByUserIdService } from '@/services/content/get-content-by-user-id.service';
 
 export class ContentController {
   async createContent(req: Request, res: Response, next: NextFunction) {
@@ -81,6 +82,23 @@ export class ContentController {
     try {
       const slug = req.params.slug;
       const result = await getContentService(slug);
+
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getEventsByUserId(req: Request, res: Response, next: NextFunction) {
+    try {
+      const query = {
+        id: parseInt(req.query.id as string),
+        take: parseInt(req.query.take as string) || 8,
+        page: parseInt(req.query.page as string) || 1,
+        sortBy: parseInt(req.query.sortBy as string) || 'createdAt',
+        sortOrder: parseInt(req.query.sortOrder as string) || 'desc',
+      };
+      const result = await getContentByUserIdService(query);
 
       return res.status(200).send(result);
     } catch (error) {

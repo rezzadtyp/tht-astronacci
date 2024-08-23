@@ -2,22 +2,28 @@ import { JWT_SECRET } from '@/config';
 import prisma from '@/prisma';
 import { sign } from 'jsonwebtoken';
 import { getUserInfo } from '@/lib/getUserInfo';
+import { decrypt } from '@/lib/cryptoUtils';
 
-export const loginWithGoogleService = async (access_token: any) => {
+export const loginWithGoogleService = async ({
+  accessToken,
+}: {
+  accessToken: string;
+}) => {
   try {
-    if (!access_token) {
+    const decryptedToken = decrypt(accessToken);
+    if (!decryptedToken) {
       return {
         status: 400,
-        message: 'Failed to get tokens from google',
+        message: 'Missing access token',
       };
     }
 
-    const userInfo = await getUserInfo(access_token);
+    const userInfo = await getUserInfo(decryptedToken);
 
     if (!userInfo) {
       return {
         status: 400,
-        message: 'Failed to get user info from google',
+        message: 'Failed to get user info from Google',
       };
     }
 
@@ -47,6 +53,10 @@ export const loginWithGoogleService = async (access_token: any) => {
       token,
     };
   } catch (error) {
-    throw error;
+    console.error('Error during Google login:', error);
+    return {
+      status: 500,
+      message: 'Internal server error',
+    };
   }
 };
