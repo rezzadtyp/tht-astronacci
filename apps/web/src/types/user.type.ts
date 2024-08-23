@@ -13,8 +13,6 @@ enum Provider {
 }
 
 enum Role {
-  TYPE_A = 'TYPE_A',
-  TYPE_B = 'TYPE_B',
-  TYPE_C = 'TYPE_C',
+  USER = 'USER',
   TEACHER = 'TEACHER',
 }

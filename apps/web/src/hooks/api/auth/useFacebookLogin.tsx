@@ -5,12 +5,12 @@ import { AxiosError } from 'axios';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const useGoogleSignIn = () => {
+const useFacebookLogin = () => {
   const router = useRouter();
 
   return useMutation({
     mutationFn: async () => {
-      await signIn('google', {
+      await signIn('facebook', {
         redirect: false,
       });
     },
@@ -18,9 +18,9 @@ const useGoogleSignIn = () => {
       router.replace('/');
     },
     onError: (error: AxiosError<any>) => {
-      console.error('Google login error:', error.response?.data);
+      console.error('Facebook login error:', error.response?.data);
     },
   });
 };
 
-export default useGoogleSignIn;
+export default useFacebookLogin;

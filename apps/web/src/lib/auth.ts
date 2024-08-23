@@ -1,6 +1,9 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import FacebookProvider from 'next-auth/providers/facebook';
+import { axiosInstance } from './axios';
+import { encrypt } from './cryptoUtils';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -15,6 +18,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: 'openid profile email',
+        },
+      },
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
   ],
   session: {
@@ -26,7 +38,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     error: '/error',
   },
   callbacks: {
-    async signIn() {
+    async signIn({ account, user }) {
+      if (account?.provider === 'google' && account.access_token) {
+        const encryptedToken = encrypt(account.access_token);
+        const { data } = await axiosInstance.post('/auth/google', {
+          accessToken: encryptedToken,
+        });
+        console.log(data);
+        console.log(user);
+      }
       return true;
     },
     async jwt({ token, user }) {

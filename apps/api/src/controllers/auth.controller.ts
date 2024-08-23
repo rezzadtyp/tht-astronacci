@@ -48,8 +48,7 @@ export class AuthController {
 
   async loginWithGoogle(req: Request, res: Response, next: NextFunction) {
     try {
-      const { code } = req.body;
-      const result = await loginWithGoogleService(code);
+      const result = await loginWithGoogleService(req.body);
 
       return res.status(200).send(result);
     } catch (error) {
