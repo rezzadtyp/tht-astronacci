@@ -15,7 +15,13 @@ export class ContentController {
         throw new Error('no file uploaded');
       }
 
-      const result = await createContentService(req.body, files[0]);
+      const userId = res.locals.user.id;
+
+      const result = await createContentService(
+        Number(userId),
+        req.body,
+        files[0],
+      );
 
       return res.status(200).send(result);
     } catch (error) {
@@ -98,7 +104,8 @@ export class ContentController {
         sortBy: parseInt(req.query.sortBy as string) || 'createdAt',
         sortOrder: parseInt(req.query.sortOrder as string) || 'desc',
       };
-      const result = await getContentByUserIdService(query);
+      const userId = res.locals.user.id;
+      const result = await getContentByUserIdService(Number(userId), query);
 
       return res.status(200).send(result);
     } catch (error) {

@@ -1,16 +1,17 @@
 import prisma from '@/prisma';
 import { PaginationQueryParams } from '@/types/pagination';
 
-interface GetContentQuery extends PaginationQueryParams {
-  id: number;
-}
+interface GetContentQuery extends PaginationQueryParams {}
 
-export const getContentByUserIdService = async (query: GetContentQuery) => {
+export const getContentByUserIdService = async (
+  userId: number,
+  query: GetContentQuery,
+) => {
   try {
-    const { id, page, take, sortBy, sortOrder } = query;
+    const { page, take, sortBy, sortOrder } = query;
     const user = await prisma.user.findFirst({
       where: {
-        id,
+        id: userId,
       },
     });
 
@@ -20,7 +21,7 @@ export const getContentByUserIdService = async (query: GetContentQuery) => {
 
     const content = await prisma.content.findMany({
       where: {
-        userId: id,
+        userId,
       },
       skip: (page - 1) * take,
       take: take,
@@ -30,7 +31,7 @@ export const getContentByUserIdService = async (query: GetContentQuery) => {
     });
 
     const count = await prisma.content.count({
-      where: { userId: id },
+      where: { userId },
     });
 
     return {

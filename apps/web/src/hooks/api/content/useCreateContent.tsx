@@ -1,42 +1,46 @@
 'use client';
 
 import useAxios from '@/hooks/useAxios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { FileWithPath } from 'react-dropzone';
 
-interface CreateBlogPayload {
+interface CreateContentPayload {
   title: string;
   category: string;
   description: string;
   type: string;
-  thumbnail_url: File | null;
+  thumbnail_url: FileList | null;
   video_url: string;
 }
 
 const useCreateContent = () => {
   const router = useRouter();
   const { axiosInstance } = useAxios();
-  const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (payload: CreateBlogPayload) => {
-      const createBlogForm = new FormData();
+    mutationFn: async (payload: CreateContentPayload) => {
+      const createContentForm = new FormData();
+      const { thumbnail_url, video_url } = payload;
 
-      createBlogForm.append('title', payload.title);
-      createBlogForm.append('type', payload.type);
-      createBlogForm.append('category', payload.category);
-      createBlogForm.append('description', payload.description);
-      createBlogForm.append('video_url', payload.video_url);
-      createBlogForm.append('thumbnail_url', payload.thumbnail_url!);
+      createContentForm.append('title', payload.title);
+      createContentForm.append('category', payload.category);
+      createContentForm.append('description', payload.description);
+      createContentForm.append('video_url', payload.video_url);
+      createContentForm.append('type', payload.type);
+      if (thumbnail_url) {
+        Array.from(thumbnail_url).forEach((file: FileWithPath) => {
+          createContentForm.append('thumbnail_url', file);
+        });
+      }
 
-      const { data } = await axiosInstance.post('/content', createBlogForm);
+      const { data } = await axiosInstance.post('/content', createContentForm);
       return data;
     },
     onSuccess: async () => {
       console.log('Create content success');
-      queryClient.invalidateQueries({ queryKey: ['contents'] });
-      router.push('/');
+      router.push('/dashboard/teacher');
     },
     onError: (error: AxiosError<any>) => {
       console.error(error.response?.data);

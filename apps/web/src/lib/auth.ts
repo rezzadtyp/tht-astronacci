@@ -44,8 +44,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { data } = await axiosInstance.post('/auth/google', {
           accessToken: encryptedToken,
         });
-        console.log(data);
-        console.log(user);
+        user.id = data.id;
+        user.name = data.name;
       }
       return true;
     },

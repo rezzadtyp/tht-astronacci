@@ -64,7 +64,10 @@ export const getContentsByMembershipService = async (
       },
     });
 
-    return [...articles, ...videos];
+    return {
+      data: [...articles, ...videos],
+      meta: { page, take },
+    };
   } catch (error) {
     throw error;
   }

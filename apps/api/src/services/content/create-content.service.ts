@@ -17,11 +17,12 @@ interface CreateContentBody
   > {}
 
 export const createContentService = async (
+  userId: number,
   body: CreateContentBody,
   file: Express.Multer.File,
 ) => {
   try {
-    const { title, userId, video_url } = body;
+    const { title, video_url, type } = body;
 
     const existingTitle = await prisma.content.findFirst({ where: { title } });
     if (existingTitle) {
@@ -37,7 +38,8 @@ export const createContentService = async (
       throw new Error('Only teachers can upload content');
     }
 
-    const category = video_url ? 'VIDEO' : 'ARTICLE';
+    const contentType =
+      video_url !== undefined && type === 'VIDEO' ? 'VIDEO' : 'ARTICLE';
 
     const contentUpload = await prisma.content.create({
       data: {
@@ -45,7 +47,7 @@ export const createContentService = async (
         slug: convertToSlug(title),
         thumbnail_url: `/images/${file.filename}`,
         userId: Number(userId),
-        category,
+        type: contentType,
       },
     });
 
