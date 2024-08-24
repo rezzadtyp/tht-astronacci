@@ -16,6 +16,7 @@ export class AuthRouter {
     this.router.post('/register', this.authController.register);
     this.router.post('/login', this.authController.login);
     this.router.post('/google', this.authController.loginWithGoogle);
+    this.router.post('/facebook', this.authController.loginWithFacebook);
     this.router.post('/forgot-password', this.authController.forgotPassword);
     this.router.patch(
       '/reset-password',

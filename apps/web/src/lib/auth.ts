@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import FacebookProvider from 'next-auth/providers/facebook';
+// import FacebookProvider from 'next-auth/providers/facebook';
 import { axiosInstance } from './axios';
 import { encrypt } from './cryptoUtils';
 
@@ -24,10 +24,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
     }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID!,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-    }),
+    // FacebookProvider({
+    //   clientId: process.env.FACEBOOK_CLIENT_ID!,
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    //   checks: ['none'],
+    // }),
   ],
   session: {
     strategy: 'jwt',
@@ -46,6 +47,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
         user.id = data.id;
         user.name = data.name;
+      }
+      if (account?.provider === 'social') {
+        console.log(account);
       }
       return true;
     },
