@@ -5,6 +5,7 @@ import { forgotPasswordService } from '@/services/auth/forgot-password.service';
 import { resetPasswordService } from '@/services/auth/reset-password.service';
 import { loginWithGoogleService } from '@/services/auth/google-login.service';
 import { updateMembershipService } from '@/services/auth/update-membership.service';
+import { loginWithFacebookService } from '@/services/auth/facebook-login.service';
 
 export class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
@@ -49,6 +50,16 @@ export class AuthController {
   async loginWithGoogle(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await loginWithGoogleService(req.body);
+
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async loginWithFacebook(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await loginWithFacebookService(req.body);
 
       return res.status(200).send(result);
     } catch (error) {
