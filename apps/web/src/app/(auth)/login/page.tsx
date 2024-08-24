@@ -11,7 +11,9 @@ const Login = () => {
   return (
     <div className="container">
       <Header />
-      <LoginForm />
+      <div className="flex items-center h-[90vh]">
+        <LoginForm />
+      </div>
     </div>
   );
 };

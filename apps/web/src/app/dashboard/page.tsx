@@ -8,14 +8,14 @@ const Dashboard = () => {
   const session = useSession();
 
   const userRole = session.data?.user.role;
-  console.log(userRole)
+  console.log(userRole);
 
   if (userRole === 'TEACHER') {
     router.push('/dashboard/teacher');
   } else {
     router.push('/dashboard/user');
   }
-  
+
   return <div>Loading...</div>;
 };
 

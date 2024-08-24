@@ -31,7 +31,7 @@ const ContentCard: FC<ICardContentProps> = ({
             src={thumbnail_url}
             alt="thumbnail"
             fill
-            className="rounded-lg object-cover group-hover:rotate-2 group-hover:scale-110 group-hover:transition-all group-hover:duration-500"
+            className="rounded-lg object-cover z-10 group-hover:rotate-2 group-hover:scale-110 group-hover:transition-all group-hover:duration-500"
           />
         </UiCardHeader>
         <Badge>{category}</Badge>
