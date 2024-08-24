@@ -1,7 +1,6 @@
 'use client';
 
 import ContentCard from '@/components/ContentCard';
-import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
 import AuthGuardUser from '@/hoc/AuthGuardUser';
 import useGetContents from '@/hooks/api/content/useGetContents';
@@ -29,10 +28,9 @@ const DashboardUser = () => {
   }
 
   return (
-    <div>
-      <Header />
-      <h1>Your course</h1>
-      <section className="grid grid-cols-3 gap-4">
+    <div className="container px-0 space-y-4 pb-10">
+      <h1 className="text-xl font-bold">Your course</h1>
+      <section className="grid grid-cols-3 gap-4 w-full">
         {contents.data.map((content: any, index: any) => {
           return (
             <ContentCard
@@ -47,12 +45,6 @@ const DashboardUser = () => {
           );
         })}
       </section>
-      <Pagination
-        total={contents.meta.total}
-        take={contents.meta.take}
-        onPageChange={onPageChange}
-        page={page}
-      />
     </div>
   );
 };

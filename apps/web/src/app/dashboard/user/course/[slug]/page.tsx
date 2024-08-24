@@ -36,9 +36,9 @@ const ContentPage = ({
   const videoUrl = data.video_url ? getYoutubeEmbedUrl(data.video_url) : null;
 
   return (
-    <main className="container mx-auto px-4">
-      <section className="mb-4">
-        <div className="mb-4 space-y-1.5">
+    <main className="container mx-auto px-4 space-y-4">
+      <section className="mb-4 w-full flex flex-col items-center space-y-4">
+        <div className="mb-4 space-y-1.5 w-full">
           <Badge variant="outline" className="rounded-sm bg-green-100">
             {data.category}
           </Badge>
@@ -59,7 +59,7 @@ const ContentPage = ({
           />
         ) : null}
 
-        <div className="relative h-[400px]">
+        <div className="relative h-96 w-[800px]">
           <Image
             fill
             src={appConfig.baseUrl + `/assets${data.thumbnail_url}`}

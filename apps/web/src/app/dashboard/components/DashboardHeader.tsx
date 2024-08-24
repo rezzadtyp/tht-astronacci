@@ -1,11 +1,11 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Button } from './ui/button';
 
-const Header = () => {
+const DashboardHeader = () => {
   const session = useSession();
   const router = useRouter();
 
@@ -19,27 +19,6 @@ const Header = () => {
           >
             Skill Up
           </h1>
-
-          <div className="flex cursor-pointer items-center gap-8 text-sm font-bold">
-            <Link href="/" className="hover:underline underline-offset-4">
-              Home
-            </Link>
-            <Link href="/about" className="hover:underline underline-offset-4">
-              About
-            </Link>
-            <Link
-              href="/courses"
-              className="hover:underline underline-offset-4"
-            >
-              Courses
-            </Link>
-            <Link
-              href="/community"
-              className="hover:underline underline-offset-4"
-            >
-              Community
-            </Link>
-          </div>
 
           <div className="flex cursor-pointer items-center gap-8">
             {session.data?.user.id ? (
@@ -62,4 +41,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DashboardHeader;

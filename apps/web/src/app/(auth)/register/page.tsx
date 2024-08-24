@@ -9,9 +9,11 @@ export const metadata: Metadata = {
 
 const Register = () => {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container">
       <Header />
-      <RegisterForm />
+      <div className="flex items-center h-[90vh]">
+        <RegisterForm />
+      </div>
     </div>
   );
 };
