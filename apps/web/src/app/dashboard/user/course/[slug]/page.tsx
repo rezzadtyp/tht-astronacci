@@ -4,6 +4,7 @@ import Markdown from '@/components/Markdown';
 import { Badge } from '@/components/ui/badge';
 import useGetContent from '@/hooks/api/content/useGetContent';
 import { appConfig } from '@/utils/config';
+import Head from 'next/head';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -36,43 +37,49 @@ const ContentPage = ({
   const videoUrl = data.video_url ? getYoutubeEmbedUrl(data.video_url) : null;
 
   return (
-    <main className="container mx-auto px-4 space-y-4">
-      <section className="mb-4 w-full flex flex-col items-center space-y-4">
-        <div className="mb-4 space-y-1.5 w-full">
-          <Badge variant="outline" className="rounded-sm bg-green-100">
-            {data.category}
-          </Badge>
-          <Badge variant="outline" className="rounded-sm bg-red-100">
-            {data.type}
-          </Badge>
-          <h1 className="text-4xl font-semibold">{data.title}</h1>
-        </div>
+    <>
+      <Head>
+        <title key="title">{data.title}</title>
+        <meta key="og:title" property="og:title" content={data.title} />
+      </Head>
+      <div className="container mx-auto px-4 space-y-4">
+        <section className="mb-4 w-full flex flex-col items-center space-y-4">
+          <div className="mb-4 space-y-1.5 w-full">
+            <Badge variant="outline" className="rounded-sm bg-green-100">
+              {data.category}
+            </Badge>
+            <Badge variant="outline" className="rounded-sm bg-red-100">
+              {data.type}
+            </Badge>
+            <h1 className="text-4xl font-semibold">{data.title}</h1>
+          </div>
 
-        {videoUrl ? (
-          <iframe
-            className="w-full aspect-video self-stretch md:min-h-96"
-            src={videoUrl}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Product Overview Video"
-          />
-        ) : null}
+          {videoUrl ? (
+            <iframe
+              className="w-full aspect-video self-stretch md:min-h-96"
+              src={videoUrl}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Product Overview Video"
+            />
+          ) : null}
 
-        <div className="relative h-96 w-[800px]">
-          <Image
-            fill
-            src={appConfig.baseUrl + `/assets${data.thumbnail_url}`}
-            alt="thumbnail image"
-            className="object-cover bg-slate-200"
-          />
-        </div>
-      </section>
+          <div className="relative h-96 w-[800px]">
+            <Image
+              fill
+              src={appConfig.baseUrl + `/assets${data.thumbnail_url}`}
+              alt="thumbnail image"
+              className="object-cover bg-slate-200"
+            />
+          </div>
+        </section>
 
-      <section>
-        <Markdown content={data.description} />
-      </section>
-    </main>
+        <section>
+          <Markdown content={data.description} />
+        </section>
+      </div>
+    </>
   );
 };
 

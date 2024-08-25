@@ -34,6 +34,7 @@ const DashboardUser = () => {
         {contents.data.map((content: any, index: any) => {
           return (
             <ContentCard
+              key={index}
               category={content.category}
               slug={`dashboard/user/course/${content.slug}`}
               thumbnail_url={

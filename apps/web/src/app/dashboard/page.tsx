@@ -1,20 +1,22 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
   const router = useRouter();
-  const session = useSession();
+  const { data: session } = useSession();
 
-  const userRole = session.data?.user.role;
-  console.log(userRole);
+  useEffect(() => {
+    const userRole = session?.user?.role;
 
-  if (userRole === 'TEACHER') {
-    router.push('/dashboard/teacher');
-  } else {
-    router.push('/dashboard/user');
-  }
+    if (userRole === 'TEACHER') {
+      router.push('/dashboard/teacher');
+    } else {
+      router.push('/dashboard/user');
+    }
+  }, [router, session]);
 
   return <div>Loading...</div>;
 };

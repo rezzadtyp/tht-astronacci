@@ -45,8 +45,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { data } = await axiosInstance.post('/auth/google', {
           accessToken: encryptedToken,
         });
-        user.id = data.id;
-        user.name = data.name;
+        user.id = data.data.id;
+        user.name = data.data.name;
+        console.log(data);
       }
       if (account?.provider === 'social') {
         console.log(account);

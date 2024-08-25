@@ -21,7 +21,7 @@ const AuthGuardUser = (Component: any) => {
       if (!id && !isLoading && role !== 'USER') {
         redirect('/login');
       }
-    }, [id, isLoading]);
+    }, []);
 
     if (isLoading || !id) {
       return (

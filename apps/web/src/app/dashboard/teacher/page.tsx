@@ -10,7 +10,7 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const DashboardTeacher = () => {
+const Teacher = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
   const { data: contents, isPending } = useGetContentsByUserId({
@@ -27,7 +27,7 @@ const DashboardTeacher = () => {
   }
 
   if (!contents) {
-    return <h1 className="text-center">Blog tidak ditemukan</h1>;
+    return <h1 className="text-center">Content tidak ditemukan</h1>;
   }
 
   return (
@@ -40,6 +40,7 @@ const DashboardTeacher = () => {
         {contents.data.map((content: any, index: any) => {
           return (
             <ContentCard
+              key={index}
               category={content.category}
               slug={`dashboard/teacher/${content.slug}`}
               thumbnail_url={
@@ -61,4 +62,4 @@ const DashboardTeacher = () => {
   );
 };
 
-export default AuthGuardTeacher(DashboardTeacher);
+export default AuthGuardTeacher(Teacher);

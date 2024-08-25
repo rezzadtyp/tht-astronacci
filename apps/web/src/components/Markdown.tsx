@@ -15,11 +15,9 @@ const Markdown: FC<MarkdownProps> = ({ content }) => {
   };
 
   return (
-    <ReactMarkdown
-      children={content}
-      rehypePlugins={[rehypeRaw]}
-      components={renderers}
-    />
+    <ReactMarkdown rehypePlugins={[rehypeRaw]} components={renderers}>
+      {content}
+    </ReactMarkdown>
   );
 };
 

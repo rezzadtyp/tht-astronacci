@@ -1,6 +1,15 @@
-import CreateContentForm from './components/CreateContentForm';
+// import CreateContentForm from './components/CreateContentForm';
 
-const CreatePage = () => {
+import dynamic from 'next/dynamic';
+
+const CreateContentForm = dynamic(
+  () => import('./components/CreateContentForm'),
+  {
+    ssr: false,
+  },
+);
+
+const Create = () => {
   return (
     <div>
       <CreateContentForm />
@@ -8,4 +17,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default Create;
